@@ -1,4 +1,4 @@
-# ИТ-Техника — учёт техники (веб-приложение)
+# Техника — учёт техники (веб-приложение)
 
 Django + React (Vite), развёртывание через Docker(nginx + gunicorn).
 
@@ -45,8 +45,5 @@ npm run dev
 
 Фронтенд проксирует `/api` на `http://localhost:8000` (см. `vite.config.ts`).
 
-## Важно для Git
 
-- Файл **`.env` не коммитится** — используйте `.env.example`.
-- Каталоги **`backend/data/`**, **`backend/media/`**, **`backend/staticfiles/`** и **`node_modules/`** в репозиторий не попадают (см. `.gitignore`).
 
