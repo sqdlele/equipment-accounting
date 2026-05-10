@@ -1,0 +1,60 @@
+# --- Python / Django ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+*.pyd
+.Python
+*.so
+*.egg
+*.egg-info/
+.eggs/
+dist/
+build/
+pip-wheel-metadata/
+.pytest_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+*.cover
+.hypothesis/
+venv/
+.venv/
+env/
+ENV/
+
+*.log
+local_settings.py
+*.sqlite3
+db.sqlite3
+
+backend/data/
+backend/media/
+backend/staticfiles/
+
+# --- Node / frontend ---
+node_modules/
+frontend/dist/
+frontend/.vite/
+*.tsbuildinfo
+
+# --- Секреты и локальная среда ---
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# --- IDE / ОС ---
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# --- Прочее ---
+*.orig
+*.bak

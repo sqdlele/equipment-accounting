@@ -1,0 +1,46 @@
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: it_asset_backend
+    environment:
+      # 1 — при старте выполнить python manage.py seed_demo (демо для дашборда). Для «чистой» БД: 0
+      - RUN_DEMO_SEED=${RUN_DEMO_SEED:-1}
+      - DJANGO_SETTINGS_MODULE=config.settings
+      - SECRET_KEY=${SECRET_KEY:-change-me-in-production-super-secret-key-12345}
+      - DEBUG=${DEBUG:-False}
+      - ALLOWED_HOSTS=${ALLOWED_HOSTS:-localhost,127.0.0.1,87.250.22.114}
+      - CORS_ALLOWED_ORIGINS=${CORS_ALLOWED_ORIGINS:-http://localhost,http://87.250.22.114}
+    volumes:
+      - db_data:/app/data
+      - media_data:/app/media
+      - static_data:/app/staticfiles
+    restart: unless-stopped
+    networks:
+      - app_network
+
+  nginx:
+    build:
+      context: .
+      dockerfile: nginx/Dockerfile
+    container_name: it_asset_nginx
+    ports:
+      - "${PORT:-80}:80"
+    volumes:
+      - static_data:/app/staticfiles:ro
+      - media_data:/app/media:ro
+    depends_on:
+      - backend
+    restart: unless-stopped
+    networks:
+      - app_network
+
+volumes:
+  db_data:
+  media_data:
+  static_data:
+
+networks:
+  app_network:
+    driver: bridge
