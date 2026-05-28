@@ -1,23 +1,25 @@
 import { logout, user } from './auth.js';
+import { icon } from './icons.js';
 import { navigate } from './router.js';
 import { esc } from './utils.js';
 
 const nav = [
-  ['/', '▦', 'Дашборд'],
-  ['/assets', '🖥', 'Техника'],
-  ['/movements', '📦', 'Перемещения'],
-  ['/repairs', '🔧', 'Ремонты'],
-  ['/reports', '📊', 'Отчёты'],
-  ['/admin', '⚙', 'Справочники'],
+  ['/', 'dashboard', 'Дашборд'],
+  ['/request', 'request', 'Заявка'],
+  ['/assets', 'inventory', 'Техника'],
+  ['/movements', 'move', 'Перемещения'],
+  ['/repairs', 'repair', 'Ремонты'],
+  ['/reports', 'reports', 'Отчёты'],
+  ['/admin', 'settings', 'Справочники'],
 ];
 
 export function layout(content) {
   const u = user();
   const path = location.pathname;
-  const links = nav.map(([href, icon, label]) => {
+  const links = nav.map(([href, iconName, label]) => {
     const active = href === '/' ? path === '/' : path.startsWith(href);
     return `<a data-link class="nav-link ${active ? 'active' : ''}" href="${href}">
-      <span class="nav-icon">${icon}</span><span>${label}</span>
+      <span class="nav-icon">${icon(iconName)}</span><span>${label}</span>
     </a>`;
   }).join('');
   const display = u ? (u.first_name ? `${u.first_name} ${u.last_name || ''}`.trim() : u.username) : '';

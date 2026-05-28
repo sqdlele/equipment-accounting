@@ -1,5 +1,6 @@
 import { assetsApi, categoriesApi, employeesApi, locationsApi, manufacturersApi, repairsApi } from '../api.js';
 import { canWrite } from '../auth.js';
+import { icon } from '../icons.js';
 import { navigate } from '../router.js';
 import { alert, assetBadge, pageHeader, pagination, priorityBadge, repairBadge } from '../ui.js';
 import { esc, fmtDate, fmtDateTime, formToObject, money } from '../utils.js';
@@ -184,7 +185,7 @@ export async function assetDetailPage({ params }) {
     ${pageHeader(a.name, `Инв. №${a.inventory_number}`, actions)}
     <div class="content grid grid-3">
       <div class="stack">
-        <div class="card" style="text-align:center">${a.photo ? `<img class="photo" src="${esc(a.photo)}" alt="${esc(a.name)}">` : '<div class="photo" style="display:flex;align-items:center;justify-content:center;color:#d1d5db;font-size:48px">🖥</div>'}<div style="margin-top:12px">${assetBadge(a.status)}</div></div>
+        <div class="card" style="text-align:center">${a.photo ? `<img class="photo" src="${esc(a.photo)}" alt="${esc(a.name)}">` : `<div class="photo photo-placeholder">${icon('photo', 'icon-xl')}</div>`}<div style="margin-top:12px">${assetBadge(a.status)}</div></div>
         ${a.qr_code ? `<div class="card" style="text-align:center"><div class="tiny">QR-код</div><img class="qr" src="${esc(a.qr_code)}" alt="QR"><br><a class="btn-secondary" href="${esc(a.qr_code)}" download="qr_${esc(a.inventory_number)}.png">Скачать QR</a></div>` : ''}
       </div>
       <div class="span-2"><div class="card compact"><div class="tabs">${tabs}</div><div class="content">${body}</div></div></div>

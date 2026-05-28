@@ -29,7 +29,10 @@ button:disabled { cursor: not-allowed; opacity: .6; }
 }
 .nav-link:hover { background: rgb(255 255 255 / .10); color: #fff; }
 .nav-link.active { background: rgb(255 255 255 / .20); color: #fff; }
-.nav-icon { width: 20px; text-align: center; }
+.nav-icon { width: 20px; height: 20px; display: inline-flex; align-items: center; justify-content: center; }
+.icon { width: 20px; height: 20px; display: inline-block; fill: currentColor; }
+.icon-lg { width: 30px; height: 30px; display: inline-block; fill: currentColor; }
+.icon-xl { width: 56px; height: 56px; display: inline-block; fill: currentColor; }
 .user-panel { padding: 16px; border-top: 1px solid rgb(255 255 255 / .12); }
 .user-row { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
 .avatar {
@@ -128,6 +131,7 @@ table { width: 100%; border-collapse: collapse; }
 .login-title h1 { margin: 0 0 4px; font-size: 26px; }
 .login-title p { margin: 0; color: #bfdbfe; font-size: 14px; }
 .photo { width: 100%; height: 190px; object-fit: cover; border-radius: 12px; background: #f3f4f6; }
+.photo-placeholder { display: flex; align-items: center; justify-content: center; color: #cbd5e1; }
 .qr { width: 160px; height: 160px; object-fit: contain; }
 .truncate { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .pre { white-space: pre-wrap; }
@@ -136,6 +140,15 @@ table { width: 100%; border-collapse: collapse; }
 .accordion-head { width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 14px 16px; background: #fff; border: 0; text-align: left; }
 .accordion-head:hover { background: #f9fafb; }
 .accordion-body { border-top: 1px solid #f3f4f6; background: #f9fafb; padding: 12px 16px; }
+.request-page { max-width: 1180px; }
+.request-flow .card { height: 100%; }
+.request-step { padding: 18px; }
+.request-step-icon {
+  width: 48px; height: 48px; border-radius: 14px; display: flex; align-items: center; justify-content: center;
+  color: #1d4ed8; background: #dbeafe; margin-bottom: 12px;
+}
+.request-step h3 { margin: 0 0 8px; font-size: 16px; }
+.request-step p { margin: 0; color: #6b7280; font-size: 13px; line-height: 1.45; }
 .text-green { color: #16a34a; } .text-blue { color: #2563eb; } .text-yellow { color: #ca8a04; } .text-red { color: #dc2626; } .text-indigo { color: #4f46e5; }
 .font-bold { font-weight: 800; } .text-3xl { font-size: 30px; line-height: 1; } .text-sm { font-size: 14px; }
 @media (max-width: 1024px) { .grid-4 { grid-template-columns: repeat(2, minmax(0,1fr)); } .grid-3 { grid-template-columns: 1fr; } }

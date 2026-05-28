@@ -1,4 +1,5 @@
 from django.db import transaction
+from rest_framework.permissions import IsAuthenticated
 from rest_framework import viewsets, status
 from rest_framework.decorators import action
 from rest_framework.exceptions import ValidationError
@@ -20,6 +21,11 @@ class RepairTicketViewSet(viewsets.ModelViewSet):
     filterset_fields = ['status', 'priority', 'asset', 'assigned_to']
     search_fields = ['description', 'defect_type', 'asset__inventory_number', 'asset__name']
     ordering_fields = ['created_at', 'priority', 'status']
+
+    def get_permissions(self):
+        if self.action == 'create':
+            return [IsAuthenticated()]
+        return [permission() for permission in self.permission_classes]
 
     def perform_create(self, serializer):
         ticket = serializer.save(reported_by=self.request.user)
