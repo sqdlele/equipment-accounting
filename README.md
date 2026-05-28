@@ -1,8 +1,4 @@
-<<<<<<< Updated upstream
-# Техника — учёт техники (веб-приложение)
-=======
-# ИТ-Техника - учёт техники (веб-приложение)
->>>>>>> Stashed changes
+# учёт техники (веб-приложение)
 
 Django REST API + статический frontend на обычном JavaScript, развёртывание через Docker (nginx + gunicorn).
 
@@ -59,11 +55,7 @@ python -m http.server 5173
 
 При локальном запуске без nginx API должен быть доступен по тому же origin или через отдельный локальный reverse-proxy. Основной рекомендуемый способ запуска - Docker Compose, где nginx раздаёт статические файлы и проксирует `/api` на backend.
 
-<<<<<<< Updated upstream
-
-=======
 ## Структура frontend
->>>>>>> Stashed changes
 
 - `frontend/index.html` - входная HTML-страница SPA.
 - `frontend/css/app.css` - стили без frontend-сборщика.
