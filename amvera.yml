@@ -8,4 +8,4 @@ build:
   dockerfile: Dockerfile
 
 run:
-  persistenceMount: /app
+  persistenceMount: /app/data
