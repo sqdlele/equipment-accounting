@@ -44,7 +44,7 @@ def generate_asset_excel(assets):
 
     title_cell = ws['A1']
 
-    title_cell.value = 'ИНВЕНТАРИЗАЦИОННАЯ ВЕДОМОСТЬ ИТ-ТЕХНИКИ'
+    title_cell.value = 'ИНВЕНТАРИЗАЦИОННАЯ ВЕДОМОСТЬ ТЕХНИКИ'
 
     title_cell.font = Font(bold=True, size=14, color='FFFFFF')
 

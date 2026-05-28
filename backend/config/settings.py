@@ -6,22 +6,24 @@ from dotenv import load_dotenv
 load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-
-# SQLite не создаёт каталог сам - без этого «unable to open database file»
 DATA_DIR = BASE_DIR / 'data'
 DATA_DIR.mkdir(parents=True, exist_ok=True)
 
-SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-change-me-in-production-please')
+SECRET_KEY = os.environ.get('SECRET_KEY', '4v_qj2x7_d3n_p9L_at8sK1z_u6R_w5Ym0Bf_h2Cq9Nn7Xr3J')
 
 DEBUG = os.environ.get('DEBUG', 'True') == 'True'
 
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',')
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'localhost,127.0.0.1,ucettehniki-sezzxxq.amvera.io').split(',')
 CSRF_TRUSTED_ORIGINS = [
     x for x in os.environ.get(
         'CSRF_TRUSTED_ORIGINS',
-        'http://localhost,http://127.0.0.1',
+        'http://localhost,http://127.0.0.1,https://ucettehniki-sezzxxq.amvera.io',
     ).split(',') if x
 ]
+
+if os.environ.get('DEBUG', 'True') != 'True':
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+    USE_X_FORWARDED_HOST = True
 
 INSTALLED_APPS = [
     'django.contrib.admin',

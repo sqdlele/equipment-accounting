@@ -26,9 +26,9 @@ export async function loginPage() {
   return `
     <div class="login-screen">
       <div class="login-box">
-        <div class="login-logo">ИТ</div>
+        <div class="login-logo">Т</div>
         <div class="login-title">
-          <h1>ИТ-Техника</h1>
+          <h1>Техника</h1>
           <p>Система учёта оборудования АО «ИРЗ»</p>
         </div>
         <div class="card">

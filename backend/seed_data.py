@@ -1,7 +1,7 @@
-"""
-Скрипт для заполнения БД тестовыми данными.
-Запуск: python manage.py shell < seed_data.py
-"""
+
+# Скрипт для заполнения БД тестовыми данными.
+# Запуск: python manage.py shell < seed_data.py
+
 import os
 import django
 

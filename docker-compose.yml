@@ -14,7 +14,7 @@ services:
       - CORS_ALLOWED_ORIGINS=${CORS_ALLOWED_ORIGINS:-http://localhost,http://87.250.22.114}
     volumes:
       - db_data:/app/data
-      - media_data:/app/media
+      - media_data:/app/data/media
       - static_data:/app/staticfiles
     restart: unless-stopped
     networks:
@@ -29,7 +29,7 @@ services:
       - "${PORT:-80}:80"
     volumes:
       - static_data:/app/staticfiles:ro
-      - media_data:/app/media:ro
+      - media_data:/app/data/media:ro
     depends_on:
       - backend
     restart: unless-stopped

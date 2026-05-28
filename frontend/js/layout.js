@@ -25,8 +25,8 @@ export function layout(content) {
     <div class="app-shell">
       <aside class="sidebar">
         <div class="brand">
-          <div class="brand-logo">ИТ</div>
-          <div><div class="brand-title">ИТ-Техника</div><div class="brand-sub">АО «ИРЗ»</div></div>
+          <div class="brand-logo">Т</div>
+          <div><div class="brand-title">Техника</div><div class="brand-sub">АО «ИРЗ»</div></div>
         </div>
         <nav class="nav">${links}</nav>
         ${u ? `<div class="user-panel">

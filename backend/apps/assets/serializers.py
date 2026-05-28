@@ -41,6 +41,8 @@ class AssetListSerializer(serializers.ModelSerializer):
     location_name = serializers.CharField(source='location.name', read_only=True)
     responsible_employee_name = serializers.CharField(source='responsible_employee.full_name', read_only=True)
     status_display = serializers.CharField(source='get_status_display', read_only=True)
+    photo = serializers.SerializerMethodField()
+    qr_code = serializers.SerializerMethodField()
 
     class Meta:
         model = Asset
@@ -53,6 +55,20 @@ class AssetListSerializer(serializers.ModelSerializer):
             'purchase_date', 'price',
             'photo', 'qr_code', 'created_at', 'updated_at',
         ]
+
+    def _file_url(self, file_field):
+        if not file_field:
+            return None
+        request = self.context.get('request')
+        if request:
+            return request.build_absolute_uri(file_field.url)
+        return file_field.url
+
+    def get_photo(self, obj):
+        return self._file_url(obj.photo)
+
+    def get_qr_code(self, obj):
+        return self._file_url(obj.qr_code)
 
 
 class AssetDetailSerializer(AssetListSerializer):
