@@ -84,7 +84,7 @@ class Asset(models.Model):
         ordering = ['-created_at']
 
     def __str__(self):
-        return f'{self.inventory_number} — {self.name}'
+        return f'{self.inventory_number} - {self.name}'
 
     def generate_qr_code(self):
         qr_data = f'IT-ASSET:{self.inventory_number}:{self.name}'

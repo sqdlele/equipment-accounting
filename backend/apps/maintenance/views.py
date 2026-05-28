@@ -44,7 +44,7 @@ class RepairTicketViewSet(viewsets.ModelViewSet):
             RepairTicket.STATUS_RESOLVED, RepairTicket.STATUS_CLOSED
         ):
             asset = ticket.asset
-            # После замены со склада техника уже «В эксплуатации» — не сбрасывать на склад
+            # После замены со склада техника уже «В эксплуатации» - не сбрасывать на склад
             if asset.status == Asset.STATUS_REPAIR:
                 asset.status = Asset.STATUS_WAREHOUSE
                 asset.save(update_fields=['status', 'updated_at'])

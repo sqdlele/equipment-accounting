@@ -35,7 +35,6 @@ backend/staticfiles/
 # --- Node / frontend ---
 node_modules/
 frontend/dist/
-frontend/.vite/
 *.tsbuildinfo
 
 # --- Секреты и локальная среда ---

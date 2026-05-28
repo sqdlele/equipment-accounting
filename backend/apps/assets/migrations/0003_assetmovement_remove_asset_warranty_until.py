@@ -1,4 +1,4 @@
-# Generated manually — после 0002_alter_asset_manufacture_year
+# Generated manually - после 0002_alter_asset_manufacture_year
 
 from django.conf import settings
 from django.db import migrations, models

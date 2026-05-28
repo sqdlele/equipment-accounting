@@ -5,7 +5,7 @@ services:
       dockerfile: Dockerfile
     container_name: it_asset_backend
     environment:
-      # 1 — при старте выполнить python manage.py seed_demo (демо для дашборда). Для «чистой» БД: 0
+      # 1 - при старте выполнить python manage.py seed_demo (демо для дашборда). Для «чистой» БД: 0
       - RUN_DEMO_SEED=${RUN_DEMO_SEED:-1}
       - DJANGO_SETTINGS_MODULE=config.settings
       - SECRET_KEY=${SECRET_KEY:-change-me-in-production-super-secret-key-12345}

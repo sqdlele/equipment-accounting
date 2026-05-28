@@ -58,15 +58,15 @@ def generate_asset_pdf(assets):
     table_data = [headers]
 
     for idx, asset in enumerate(assets, 1):
-        year_cell = str(asset.manufacture_year) if asset.manufacture_year else '—'
+        year_cell = str(asset.manufacture_year) if asset.manufacture_year else '-'
         table_data.append([
             str(idx),
             asset.inventory_number,
             asset.name[:35],
-            asset.category.name if asset.category else '—',
+            asset.category.name if asset.category else '-',
             asset.get_status_display(),
-            asset.location.name if asset.location else '—',
-            asset.responsible_employee.full_name[:25] if asset.responsible_employee else '—',
+            asset.location.name if asset.location else '-',
+            asset.responsible_employee.full_name[:25] if asset.responsible_employee else '-',
             year_cell,
         ])
 

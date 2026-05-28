@@ -3,7 +3,7 @@ from rest_framework import serializers
 from apps.employees.models import Employee
 from apps.locations.models import Location
 from .models import Asset, Category, Manufacturer, AssetHistory, AssetMovement
-from .services import record_asset_changes
+from .services import create_assets_bulk, generate_inventory_numbers, record_asset_changes
 
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -64,6 +64,11 @@ class AssetDetailSerializer(AssetListSerializer):
 
 
 class AssetWriteSerializer(serializers.ModelSerializer):
+    quantity = serializers.IntegerField(
+        default=1, min_value=1, max_value=50, write_only=True, required=False,
+        help_text='Число одинаковых единиц техники (одна модель - несколько инв. номеров)',
+    )
+
     class Meta:
         model = Asset
         fields = [
@@ -71,8 +76,45 @@ class AssetWriteSerializer(serializers.ModelSerializer):
             'category', 'manufacturer', 'status', 'location',
             'manufacture_year',
             'responsible_employee', 'purchase_date',
-            'price', 'description', 'photo',
+            'price', 'description', 'photo', 'quantity',
         ]
+
+    def validate(self, attrs):
+        quantity = int(attrs.get('quantity') or 1)
+        attrs['quantity'] = quantity
+        if self.instance is not None:
+            inv = (attrs.get('inventory_number') or self.instance.inventory_number or '').strip()
+        else:
+            inv = (attrs.get('inventory_number') or '').strip()
+        if not inv:
+            raise serializers.ValidationError({'inventory_number': 'Укажите инвентарный номер.'})
+        if 'inventory_number' in attrs or self.instance is None:
+            attrs['inventory_number'] = inv
+        if self.instance is not None:
+            return attrs
+        if quantity > 1:
+            numbers = generate_inventory_numbers(inv, quantity)
+            taken = Asset.objects.filter(inventory_number__in=numbers).values_list(
+                'inventory_number', flat=True,
+            )
+            if taken:
+                raise serializers.ValidationError({
+                    'inventory_number': (
+                        f'Не хватает свободных номеров в серии (нужно {quantity}). '
+                        f'Уже есть: {", ".join(sorted(taken))}. '
+                        f'Пример серии: {numbers[0]} … {numbers[-1]}'
+                    ),
+                })
+        return attrs
+
+    def create(self, validated_data):
+        quantity = validated_data.pop('quantity', 1)
+        if quantity <= 1:
+            return Asset.objects.create(**validated_data)
+        try:
+            return create_assets_bulk(validated_data, quantity)
+        except ValueError as exc:
+            raise serializers.ValidationError({'inventory_number': str(exc)}) from exc
 
 
 class AssetMovementReadSerializer(serializers.ModelSerializer):
@@ -123,7 +165,7 @@ class AssetMovementWriteSerializer(serializers.Serializer):
         new_emp_id = to_emp.pk if to_emp else None
         if asset.location_id == new_loc_id and asset.responsible_employee_id == new_emp_id:
             raise serializers.ValidationError(
-                'Выберите другую локацию или другого ответственного — иначе нет изменения для журнала.'
+                'Выберите другую локацию или другого ответственного - иначе нет изменения для журнала.'
             )
         return attrs
 

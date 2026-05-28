@@ -1,12 +1,26 @@
+<<<<<<< Updated upstream
 # Техника — учёт техники (веб-приложение)
+=======
+# ИТ-Техника - учёт техники (веб-приложение)
+>>>>>>> Stashed changes
 
-Django + React (Vite), развёртывание через Docker(nginx + gunicorn).
+Django REST API + статический frontend на обычном JavaScript, развёртывание через Docker (nginx + gunicorn).
 
 ## Требования
 
-- Docker и Docker Compose 
+- Docker и Docker Compose
 **или**
-- Python 3.11+ и Node.js 18+ 
+- Python 3.11+ для backend и любой простой static-server для frontend
+
+## Автотесты (13 сценариев из гл. 3)
+
+Из каталога `webapp/backend` (или через Docker):
+
+```bash
+python manage.py test apps.assets
+```
+
+В консоли выводится отчёт по каждому из 13 сценариев (удобно для скриншотов в диплом).
 
 ## Быстрый старт (Docker)
 Из каталога `webapp`:
@@ -26,7 +40,7 @@ docker compose up -d
 ### Backend
 
 ```bash
-cd backend
+
 python -m venv .venv
 # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
@@ -39,11 +53,19 @@ python manage.py runserver 0.0.0.0:8000
 
 ```bash
 cd frontend
-npm install
-npm run dev
+# вариант 1: Python static-server
+python -m http.server 5173
 ```
 
-Фронтенд проксирует `/api` на `http://localhost:8000` (см. `vite.config.ts`).
+При локальном запуске без nginx API должен быть доступен по тому же origin или через отдельный локальный reverse-proxy. Основной рекомендуемый способ запуска - Docker Compose, где nginx раздаёт статические файлы и проксирует `/api` на backend.
 
+<<<<<<< Updated upstream
 
+=======
+## Структура frontend
+>>>>>>> Stashed changes
 
+- `frontend/index.html` - входная HTML-страница SPA.
+- `frontend/css/app.css` - стили без frontend-сборщика.
+- `frontend/js/` - vanilla JS-модули: router, auth, API client, layout и страницы.
+- `frontend/vendor/chart.umd.min.js` - локальная копия Chart.js для графиков.

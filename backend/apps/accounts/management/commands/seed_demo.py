@@ -288,7 +288,7 @@ class Command(BaseCommand):
                 responsible_employee=emp_acc,
                 purchase_date=today - timedelta(days=1000),
                 price=Decimal('28000.00'),
-                description='Зажёв бумаги — в ремонте',
+                description='Зажёв бумаги - в ремонте',
             ),
             dict(
                 inventory_number='INV-PC-2019-099',
@@ -377,7 +377,7 @@ class Command(BaseCommand):
                 RepairWork.objects.create(
                     ticket=t_open,
                     performed_by=emp_eng,
-                    work_description='Чистка роликов, тест 50 листов — замятия повторяются',
+                    work_description='Чистка роликов, тест 50 листов - замятия повторяются',
                     parts_used='Комплект роликов RF-123 (заказан)',
                 )
 
@@ -407,7 +407,7 @@ class Command(BaseCommand):
         if mon_wh:
             RepairTicket.objects.get_or_create(
                 asset=mon_wh,
-                description='Проверка после поступления на склад — битых пикселей нет',
+                description='Проверка после поступления на склад - битых пикселей нет',
                 defaults={
                     'reported_by': User.objects.filter(username='warehouse').first(),
                     'assigned_to': emp_wh,

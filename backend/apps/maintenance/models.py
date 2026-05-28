@@ -57,7 +57,7 @@ class RepairTicket(models.Model):
         ordering = ['-created_at']
 
     def __str__(self):
-        return f'#{self.pk} {self.asset.inventory_number} — {self.get_status_display()}'
+        return f'#{self.pk} {self.asset.inventory_number} - {self.get_status_display()}'
 
     @property
     def downtime_hours(self):
@@ -92,4 +92,4 @@ class RepairWork(models.Model):
         ordering = ['-performed_at']
 
     def __str__(self):
-        return f'Работа по заявке #{self.ticket_id} — {self.performed_at:%d.%m.%Y}'
+        return f'Работа по заявке #{self.ticket_id} - {self.performed_at:%d.%m.%Y}'

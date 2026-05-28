@@ -9,7 +9,7 @@ from django.http import HttpResponse
 
 from openpyxl import load_workbook
 
-from rest_framework import mixins, viewsets
+from rest_framework import mixins, status, viewsets
 
 from rest_framework.decorators import action
 
@@ -47,7 +47,7 @@ from .serializers import (
 
 )
 
-from .services import record_asset_changes
+from .services import record_asset_changes, record_asset_creation
 
 
 
@@ -123,27 +123,22 @@ class AssetViewSet(viewsets.ModelViewSet):
 
 
 
-    def perform_create(self, serializer):
-
-        asset = serializer.save()
-
-        from .models import AssetHistory
-
-        AssetHistory.objects.create(
-
-            asset=asset,
-
-            changed_by=self.request.user,
-
-            field_changed='Создан',
-
-            old_value='',
-
-            new_value=asset.inventory_number,
-
-            note='Единица техники зарегистрирована в системе',
-
-        )
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        result = serializer.save()
+        user = request.user if request.user.is_authenticated else None
+        if isinstance(result, list):
+            for asset in result:
+                record_asset_creation(asset, user)
+            data = AssetListSerializer(result, many=True).data
+            return Response(
+                {'quantity': len(result), 'assets': data, 'id': result[0].id},
+                status=status.HTTP_201_CREATED,
+            )
+        record_asset_creation(result, user)
+        out = AssetListSerializer(result)
+        return Response(out.data, status=status.HTTP_201_CREATED)
 
 
 
@@ -291,7 +286,7 @@ class AssetViewSet(viewsets.ModelViewSet):
 
             cat_names[cid] = cname
 
-            model_label = (row['model'] or '').strip() or '—'
+            model_label = (row['model'] or '').strip() or '-'
 
             cat_models[cid][model_label] += row['unit_count']
 
@@ -303,7 +298,7 @@ class AssetViewSet(viewsets.ModelViewSet):
 
                 {'model': m, 'count': cat_models[cid][m]}
 
-                for m in sorted(cat_models[cid].keys(), key=lambda s: (s == '—', s.lower()))
+                for m in sorted(cat_models[cid].keys(), key=lambda s: (s == '-', s.lower()))
 
             ]
 

@@ -25,7 +25,7 @@ class Migration(migrations.Migration):
                 ('name', models.CharField(max_length=255, verbose_name='Наименование')),
                 ('model', models.CharField(blank=True, max_length=255, verbose_name='Модель')),
                 ('status', models.CharField(choices=[('warehouse', 'На складе'), ('in_use', 'В эксплуатации'), ('repair', 'В ремонте'), ('written_off', 'Списан')], default='warehouse', max_length=20, verbose_name='Статус')),
-                ('manufacture_year', models.PositiveSmallIntegerField(blank=True, help_text='Для номера вида кабинет+год+место; если пусто — можно взять год из даты приобретения', null=True, verbose_name='Год изготовления')),
+                ('manufacture_year', models.PositiveSmallIntegerField(blank=True, help_text='Для номера вида кабинет+год+место; если пусто - можно взять год из даты приобретения', null=True, verbose_name='Год изготовления')),
                 ('purchase_date', models.DateField(blank=True, null=True, verbose_name='Дата приобретения')),
                 ('warranty_until', models.DateField(blank=True, null=True, verbose_name='Гарантия до')),
                 ('price', models.DecimalField(blank=True, decimal_places=2, max_digits=12, null=True, verbose_name='Стоимость')),
