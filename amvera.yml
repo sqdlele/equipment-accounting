@@ -1,0 +1,11 @@
+meta:
+  environment: docker
+  toolchain:
+    name: docker
+    version: "stable"
+
+build:
+  dockerfile: Dockerfile
+
+run:
+  persistenceMount: /app/data
